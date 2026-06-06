@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:17
+    container_name: django_postgres
+    restart: always
+    environment:
+      POSTGRES_DB: libreria
+      POSTGRES_USER: usuario
+      POSTGRES_PASSWORD: "1234" # Es buena práctica poner contraseñas numéricas entre comillas
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: django_pgadmin
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "admin@admin.com"          # ⬅️ Corregido: cambiado = por :
+      PGADMIN_DEFAULT_PASSWORD: "admin"                # ⬅️ Corregido: cambiado = por :
+      PGADMIN_CONFIG_PROXY_X_HOST_COUNT: 1              # ⬅️ Corregido: cambiado = por :
+      PGADMIN_CONFIG_PROXY_X_PREFIX_COUNT: 1            # ⬅️ Corregido: cambiado = por :
+    ports:  
+      - "5050:80"
+    depends_on:
+      - postgres
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+
+volumes:
+  postgres_data:
+  pgadmin_data:
