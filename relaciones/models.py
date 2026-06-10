@@ -29,3 +29,22 @@ class Estudiante(models.Model):
 
     def __str__(self):
         return self.nombre
+
+
+class Usuario (models.Model):
+    nombre = models.CharField(max_length=(100))
+
+    
+    def __str__(self):
+        return self.nombre
+    
+
+class Perfil(models.Model):
+    bio = models.TextField()
+
+    usuario = models.OneToOneField(Usuario, on_delete=models.CASCADE)
+
+
+    def __str__(self):
+        return self.usuario.nombre
+                              
